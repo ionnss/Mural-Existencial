@@ -1,0 +1,16 @@
+{{if .}}
+    {{range .}}
+    <div class="card mb-3">
+        <div class="card-body">
+            {{if .Title}}<h5 class="card-title">{{.Title}}</h5>{{end}}
+            <p class="card-text">{{.Content}}</p>
+            <small class="text-muted">
+                Publicado em {{.CreatedAt.Format "02/01/2006 15:04"}}
+            </small>
+        </div>
+    </div>
+    {{end}}
+{{else}}
+    <p class="text-muted">Nenhum post encontrado.</p>
+{{end}}
+

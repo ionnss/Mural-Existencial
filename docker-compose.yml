@@ -1,0 +1,36 @@
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=me_user
+      - DB_PASSWORD=me_senha
+      - DB_NAME=muralexistencial_db
+    command: ["/wait-for-it.sh", "db:5432", "--", "./app_muralexistencial"]
+    networks:
+      - muralexistencial_network
+
+  db:
+    image: postgres:16.4
+    environment:
+      POSTGRES_USER: me_user
+      POSTGRES_PASSWORD: me_senha
+      POSTGRES_DB: muralexistencial_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - muralexistencial_network
+
+networks:
+  muralexistencial_network:
+
+volumes:
+  db_data:
